@@ -61,7 +61,7 @@ unsigned char* getShellcode(unsigned& siz) {
 
 
 int main() {
-	FileMemMapper fmm(L"C:\\Users\\Joshua\\source\\repos\\test\\Release\\test.exe", FILE_READ_ACCESS | FILE_WRITE_ACCESS);
+	FileMemMapper fmm(L"test.exe", FILE_READ_ACCESS | FILE_WRITE_ACCESS);
 	unsigned char* mmapfile = fmm.MappedFileBase;
 	printf("[+] Mapped file to memory (0x%X)\n",(DWORD)mmapfile);
 	//Check if file is a valid PE file
