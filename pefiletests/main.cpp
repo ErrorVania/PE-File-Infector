@@ -128,7 +128,7 @@ int main() {
 
 
 
-	DWORD oep_mem = optionalhdr->AddressOfEntryPoint + optionalhdr->ImageBase; //The oep but in a way we can jmp to after, assuming ASLR of off
+	DWORD oep_mem = optionalhdr->AddressOfEntryPoint + optionalhdr->ImageBase; //The oep but in a way we can jmp to after, assuming ASLR is off
 	printf("[+] OEP in memory (ASLR off) = 0x%X\n", oep_mem);
 
 
