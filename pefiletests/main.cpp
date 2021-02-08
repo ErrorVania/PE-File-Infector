@@ -124,7 +124,10 @@ int main(int argc, char** argv) {
 
 	printf("Press Enter to continue");
 	std::cin.get();
-	DWORD oep_mem = optionalhdr->AddressOfEntryPoint + optionalhdr->ImageBase; //The oep but in a way we can jmp to after, assuming ASLR is off
+
+
+
+	DWORD oep_mem = optionalhdr->AddressOfEntryPoint + optionalhdr->ImageBase; //The oep but in a way we can jmp to after, assuming ASLR of off
 	printf("[+] OEP in memory (ASLR off) = 0x%X\n", oep_mem);
 
 	//changes to the file happen here
