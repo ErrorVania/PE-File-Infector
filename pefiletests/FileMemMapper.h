@@ -10,8 +10,8 @@ public:
 	unsigned char* MappedFileBase;
 	DWORD filesize;
 	FileMemMapper();
-	FileMemMapper(const wchar_t* file, DWORD dwDesiredAccess);
+	FileMemMapper(const char* file, DWORD dwDesiredAccess);
 	~FileMemMapper();
-	bool open(const wchar_t* file, DWORD dwDesiredAccess);
+	bool open(const char* file, DWORD dwDesiredAccess);
 	void close();
 };

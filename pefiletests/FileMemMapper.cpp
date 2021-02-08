@@ -6,7 +6,7 @@ FileMemMapper::FileMemMapper() {
 	hFileMapping = 0;
 	filesize = 0;
 }
-FileMemMapper::FileMemMapper(const wchar_t* file, DWORD dwDesiredAccess = (FILE_READ_ACCESS | FILE_WRITE_ACCESS)) {
+FileMemMapper::FileMemMapper(const char* file, DWORD dwDesiredAccess = (FILE_READ_ACCESS | FILE_WRITE_ACCESS)) {
 	MappedFileBase = nullptr;
 	hFile = hFileMapping = 0;
 	filesize = 0;
@@ -15,8 +15,8 @@ FileMemMapper::FileMemMapper(const wchar_t* file, DWORD dwDesiredAccess = (FILE_
 FileMemMapper::~FileMemMapper() {
 	close();
 }
-bool FileMemMapper::open(const wchar_t* file, DWORD dwDesiredAccess = (FILE_READ_ACCESS | FILE_WRITE_ACCESS)) {
-	hFile = CreateFileW(file,
+bool FileMemMapper::open(const char* file, DWORD dwDesiredAccess = (FILE_READ_ACCESS | FILE_WRITE_ACCESS)) {
+	hFile = CreateFileA(file,
 		dwDesiredAccess,
 		0, 0, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
 	if (hFile == INVALID_HANDLE_VALUE) {

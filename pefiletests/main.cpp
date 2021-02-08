@@ -55,13 +55,13 @@ PIMAGE_SECTION_HEADER findSection(unsigned char* file, BYTE name[8]) {
 
 unsigned char* getShellcode(unsigned& siz) {
 	siz = 6;
-	return (unsigned char*)"\x68\xAA\xAA\xAA\xAA\xC3"; //push 0xAAAAAAAA & ret
+	return (PUCHAR)"\x68\xAA\xAA\xAA\xAA\xC3";//push 0xAAAAAAAA & ret
 }
 
 
 
-int main() {
-	FileMemMapper fmm(L"C:\\Users\\Joshua\\source\\repos\\test\\Release\\test.exe", FILE_READ_ACCESS | FILE_WRITE_ACCESS);
+int main(int argc, char** argv) {
+	FileMemMapper fmm(argv[1], FILE_READ_ACCESS | FILE_WRITE_ACCESS);
 	unsigned char* mmapfile = fmm.MappedFileBase;
 	printf("[+] Mapped file to memory (0x%X)\n",(DWORD)mmapfile);
 	//Check if file is a valid PE file
@@ -102,7 +102,7 @@ int main() {
 	DWORD* placeholder = nullptr;
 	if (payload != 0) {
 		memcpy_s(payload, shSize, x, shSize);
-		for (DWORD i = (DWORD)payload; i < shSize + (DWORD)payload; i++) {
+		for (PUCHAR i = payload; i < payload + shSize; i++) {
 			if (*((DWORD*)i) == 0xAAAAAAAA) {
 				placeholder = (DWORD*)i;
 				break;
@@ -120,17 +120,14 @@ int main() {
 	}
 
 
-	//changes to the file happen here
 
 
-	printf("Press Enter to continue\n");
+	printf("Press Enter to continue");
 	std::cin.get();
-
-
-
-	DWORD oep_mem = optionalhdr->AddressOfEntryPoint + optionalhdr->ImageBase; //The oep but in a way we can jmp to after, assuming ASLR of off
+	DWORD oep_mem = optionalhdr->AddressOfEntryPoint + optionalhdr->ImageBase; //The oep but in a way we can jmp to after, assuming ASLR is off
 	printf("[+] OEP in memory (ASLR off) = 0x%X\n", oep_mem);
 
+	//changes to the file happen here
 
 	if (placeholder != nullptr) *placeholder = oep_mem;
 	else fprintf(stderr, "[-] Could not find a large enough code cave\n");
